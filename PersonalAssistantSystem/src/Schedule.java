@@ -36,4 +36,14 @@ public class Schedule implements Serializable {
 		this.content = content;
 	}
 	
+	@Override
+	public String toString() {
+		String description;
+
+		description = month + "/" + day;
+		description += ": " + content + "\n";
+
+		return description;
+	}
+	
 }
