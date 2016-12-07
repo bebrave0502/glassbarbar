@@ -78,4 +78,73 @@ public class ScheduleList extends JFrame {
 
 	}
 	
+	void addSchedule() {
+		Schedule schedule;
+		schedule = new Schedule(month.getSelectedItem().toString(), day.getSelectedItem().toString(),
+				content.getText());
+
+		scheduleObjects.addElement(schedule);
+		listModel.addElement(schedule);
+
+		reset();
+
+	}
+
+	void deleteSchedule() {
+		int n = scheduleList.getSelectedIndex();
+		Schedule schedule;
+
+		schedule = scheduleObjects.elementAt(n);
+		scheduleObjects.remove(n);
+		listModel.removeElementAt(n);
+
+	}
+
+	void reset() {
+		content.setText("");
+		month.setSelectedItem("1");
+		day.setSelectedItem("1");
+	}
+
+	void readScheduleDB() {
+		try {
+
+			Schedule schedule;
+			File f1 = new File("schedule");
+
+			if (f1.exists()) {
+				FileInputStream fis = new FileInputStream(f1);
+				ObjectInputStream ois = new ObjectInputStream(fis);
+
+				scheduleObjects = (Vector) ois.readObject();
+
+				for (int i = 0; i < scheduleObjects.size(); i++) {
+					schedule = scheduleObjects.get(i);
+					listModel.addElement(schedule);
+				}
+
+				ois.close();
+
+			}
+		} catch (IOException ie) {
+		} catch (ClassNotFoundException ce) {
+		}
+	}
+
+	void writeScheduleDB() {
+		try {
+
+			File f1 = new File("schedule");
+
+			f1.createNewFile();
+
+			FileOutputStream fos = new FileOutputStream(f1);
+			ObjectOutputStream oos = new ObjectOutputStream(fos);
+			oos.writeObject(scheduleObjects);
+			oos.close();
+
+		} catch (IOException ie) {
+		}
+	}
+	
 }
