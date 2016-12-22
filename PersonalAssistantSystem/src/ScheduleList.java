@@ -21,14 +21,14 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
 public class ScheduleList extends JDialog {
-	private Vector<Schedule> scheduleObjects;
+	public Vector<Schedule> scheduleObjects;
 	private JPanel listpanel, selectDate;
 	private DefaultListModel listModel;
 	private JList scheduleList;
 	private JScrollPane listScroll;
 	private JButton newSchedule, deleteSchedule;
 	private JTextField content;
-	private JComboBox month, day;
+	public JComboBox month, day;
 
 	public ScheduleList(JFrame frame, String title) {	
 		super(frame, title);

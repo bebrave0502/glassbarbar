@@ -33,7 +33,7 @@ class Account implements Serializable {
 
 	public String toString() {
 		String description;	 	
-		description = "이름 : " + id;	
+		description = "name : " + id;	
 		return description;
 	}
 }
