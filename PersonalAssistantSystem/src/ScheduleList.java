@@ -8,12 +8,14 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Vector;
+
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
@@ -114,11 +116,26 @@ public class ScheduleList extends JDialog {
 	void deleteSchedule() {
 		int n = scheduleList.getSelectedIndex();
 		Schedule schedule;
+		
+		if(checkData()){
 
 		schedule = scheduleObjects.elementAt(n);
 		scheduleObjects.remove(n);
 		listModel.removeElementAt(n);
+		}
 
+	}
+	
+	Boolean checkData() {
+		int n = scheduleList.getSelectedIndex();
+		
+		if(n<0) {
+			JOptionPane.showMessageDialog(null, "삭제할 데이터가 없습니다.");
+			return false;
+		}
+		else
+			return true;
+			
 	}
 
 	void readScheduleDB() {
