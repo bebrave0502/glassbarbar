@@ -44,7 +44,7 @@ public class TestPage {
 	public void testToString() {
 		Account account = new Account("km", "1234");
 		String test = account.toString();
-		assertEquals("이름 : km", test);
+		assertEquals("name : km", test);
 	}
 	
 	@Test
