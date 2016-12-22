@@ -28,12 +28,8 @@ public class Address implements Serializable {
 	@Override
 	public String toString() {
 		String description;
-
 		description = "name: " + name +" / ";
 		description += "phone number: " + phoneNumber + "\n";
-
 		return description;
-	}
-	
-	
+	}		
 }

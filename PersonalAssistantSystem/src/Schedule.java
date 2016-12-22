@@ -39,11 +39,8 @@ public class Schedule implements Serializable {
 	@Override
 	public String toString() {
 		String description;
-
 		description = month + "/" + day;
 		description += ": " + content + "\n";
-
 		return description;
-	}
-	
+	}	
 }

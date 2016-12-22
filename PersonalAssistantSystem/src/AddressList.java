@@ -8,9 +8,9 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Vector;
-
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -18,7 +18,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
-public class AddressList extends JFrame{
+public class AddressList extends JDialog {
 	private Vector<Address> addressObjects;
 	private JLabel nameLabel, phoneLabel;
 	private JPanel listpanel;
@@ -28,16 +28,19 @@ public class AddressList extends JFrame{
 	private JButton newAddress, deleteAddress;
 	private JTextField name, phoneNumber;
 
-
-	public AddressList() {
+	public AddressList(JFrame frame, String title) {		
+		super(frame, title);
+		
 		addressObjects = new Vector<Address>();
 		listpanel = new JPanel();
-
+		
 		setSize(390, 500);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setLocation(500, 200);
+		setResizable(false);
+		
 		makeAddressPanel(listpanel);
 		add(listpanel);
-
+		
 		setVisible(true);
 	}
 
@@ -153,13 +156,5 @@ public class AddressList extends JFrame{
 	void reset() {
 		name.setText("");
 		phoneNumber.setText("");
-
 	}
-
-	public static void main(String[] args) {
-
-		new AddressList();
-
-	}
-
 }

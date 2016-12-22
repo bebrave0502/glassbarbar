@@ -8,17 +8,17 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Vector;
-
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
-public class ScheduleList extends JFrame {
+public class ScheduleList extends JDialog {
 	private Vector<Schedule> scheduleObjects;
 	private JPanel listpanel, selectDate;
 	private DefaultListModel listModel;
@@ -28,15 +28,19 @@ public class ScheduleList extends JFrame {
 	private JTextField content;
 	private JComboBox month, day;
 
-	public ScheduleList() {
+	public ScheduleList(JFrame frame, String title) {	
+		super(frame, title);
+		
 		scheduleObjects = new Vector<Schedule>();
 		listpanel = new JPanel();
-
-		setSize(350, 500);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		
+		setSize(390, 500);
+		setLocation(500, 200);
+		setResizable(false);
+		
 		makeSchedulePanel(listpanel);
 		add(listpanel);
-
+		
 		setVisible(true);
 	}
 
@@ -46,13 +50,11 @@ public class ScheduleList extends JFrame {
 		scheduleList.setPreferredSize(new Dimension(300, 400));
 		listScroll = new JScrollPane(scheduleList);
 		listScroll.setPreferredSize(new Dimension(260, 370));
-
 		selectDate = new JPanel();
-
 		month = new JComboBox();
+		
 		for (int i = 1; i < 13; i++) {
 			month.addItem(String.valueOf(i));
-
 		}
 
 		day = new JComboBox();
@@ -69,7 +71,7 @@ public class ScheduleList extends JFrame {
 		newSchedule = new JButton("NEW");
 		newSchedule.setBounds(10, 80, 50, 25);
 
-		deleteSchedule = new JButton("DELETEE");
+		deleteSchedule = new JButton("DELETE");
 		deleteSchedule.setBounds(10, 80, 50, 25);
 
 		listpanel.add(listScroll);
@@ -94,7 +96,6 @@ public class ScheduleList extends JFrame {
 				writeScheduleDB();
 			}
 		});
-
 	}
 	
 	
@@ -166,11 +167,4 @@ public class ScheduleList extends JFrame {
 		month.setSelectedItem("1");
 		day.setSelectedItem("1");
 	}
-	
-	public static void main(String[] args) {
-
-		new ScheduleList();
-
-	}
-	
 }
