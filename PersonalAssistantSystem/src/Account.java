@@ -2,7 +2,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 class Account implements Serializable {
-	private String id;	
+	public String id;	
 	private String password;
 	
 	public Account(String id, String password) {

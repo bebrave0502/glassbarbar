@@ -36,15 +36,15 @@ public class TestPage {
 	public void testEdit() {
 		Account account = new Account("admin", "1234");
 		account.edit("km", "1111");
-		String test = account.getId();
+		String test = account.id;
 		assertEquals("km", test);
 	}
 	
 	@Test
 	public void testToString() {
-		Account account = new Account("km", "1234");
-		String test = account.toString();
-		assertEquals("name : km", test);
+		Schedule myschedule = new Schedule("2", "9", "MY BIRTHDAY");
+		String test = myschedule.toString();
+		assertEquals("2/9: MY BIRTHDAY\n", test);
 	}
 	
 	@Test
