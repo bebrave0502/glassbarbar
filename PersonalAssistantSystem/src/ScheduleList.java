@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Vector;
+
+import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -34,7 +36,7 @@ public class ScheduleList extends JDialog {
 		scheduleObjects = new Vector<Schedule>();
 		listpanel = new JPanel();
 		
-		setSize(390, 500);
+		setSize(390, 400);
 		setLocation(500, 200);
 		setResizable(false);
 		
@@ -45,40 +47,41 @@ public class ScheduleList extends JDialog {
 	}
 
 	public void makeSchedulePanel(JPanel listpanel) {
+		listpanel.setLayout(new BoxLayout(listpanel, BoxLayout.Y_AXIS));		
+	
 		listModel = new DefaultListModel();
 		scheduleList = new JList(listModel);
-		scheduleList.setPreferredSize(new Dimension(300, 400));
+		scheduleList.setPreferredSize(new Dimension(390, 400));
 		listScroll = new JScrollPane(scheduleList);
-		listScroll.setPreferredSize(new Dimension(260, 370));
-		selectDate = new JPanel();
-		month = new JComboBox();
+		listScroll.setPreferredSize(new Dimension(380, 370));
 		
+		selectDate = new JPanel();
+		month = new JComboBox();		
 		for (int i = 1; i < 13; i++) {
 			month.addItem(String.valueOf(i));
 		}
-
+		
 		day = new JComboBox();
 		for (int i = 1; i < 32; i++) {
 			day.addItem(String.valueOf(i));
-
-		}
-
-		content = new JTextField(20);
-
+		}		
 		selectDate.add(month);
 		selectDate.add(day);
-
+		
+		content = new JTextField(28);
+		JPanel textFieldPanel = new JPanel();
+		textFieldPanel.add(content);
+		
 		newSchedule = new JButton("NEW");
-		newSchedule.setBounds(10, 80, 50, 25);
-
-		deleteSchedule = new JButton("DELETE");
-		deleteSchedule.setBounds(10, 80, 50, 25);
-
+		deleteSchedule = new JButton("DELETE");				
+		JPanel buttonPanel = new JPanel();
+		buttonPanel.add(newSchedule);
+		buttonPanel.add(deleteSchedule);
+		
 		listpanel.add(listScroll);
 		listpanel.add(selectDate);
-		listpanel.add(content);
-		listpanel.add(newSchedule);
-		listpanel.add(deleteSchedule);
+		listpanel.add(textFieldPanel);
+		listpanel.add(buttonPanel);
 		
 		readScheduleDB();
 		
@@ -97,8 +100,7 @@ public class ScheduleList extends JDialog {
 			}
 		});
 	}
-	
-	
+
 	void addSchedule() {
 		Schedule schedule;
 		schedule = new Schedule(month.getSelectedItem().toString(), day.getSelectedItem().toString(),
@@ -108,7 +110,6 @@ public class ScheduleList extends JDialog {
 		listModel.addElement(schedule);
 
 		reset();
-
 	}
 
 	void deleteSchedule() {
@@ -118,12 +119,10 @@ public class ScheduleList extends JDialog {
 		schedule = scheduleObjects.elementAt(n);
 		scheduleObjects.remove(n);
 		listModel.removeElementAt(n);
-
 	}
 
 	void readScheduleDB() {
 		try {
-
 			Schedule schedule;
 			File f1 = new File("schedule");
 
@@ -137,18 +136,15 @@ public class ScheduleList extends JDialog {
 					schedule = scheduleObjects.get(i);
 					listModel.addElement(schedule);
 				}
-
 				ois.close();
-
 			}
-		} catch (IOException ie) {
-		} catch (ClassNotFoundException ce) {
-		}
+		} 
+		catch (IOException ie) {} 
+		catch (ClassNotFoundException ce) {}
 	}
 
 	void writeScheduleDB() {
 		try {
-
 			File f1 = new File("schedule");
 
 			f1.createNewFile();
@@ -157,9 +153,7 @@ public class ScheduleList extends JDialog {
 			ObjectOutputStream oos = new ObjectOutputStream(fos);
 			oos.writeObject(scheduleObjects);
 			oos.close();
-
-		} catch (IOException ie) {
-		}
+		} catch (IOException ie) {}
 	}
 	
 	void reset() {

@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Vector;
+
+import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -34,7 +36,7 @@ public class AddressList extends JDialog {
 		addressObjects = new Vector<Address>();
 		listpanel = new JPanel();
 		
-		setSize(390, 500);
+		setSize(390, 400);
 		setLocation(500, 200);
 		setResizable(false);
 		
@@ -45,6 +47,8 @@ public class AddressList extends JDialog {
 	}
 
 	public void makeAddressPanel(JPanel listpanel) {
+		listpanel.setLayout(new BoxLayout(listpanel, BoxLayout.Y_AXIS));
+		
 		listModel = new DefaultListModel();
 		addressList = new JList(listModel);
 		addressList.setPreferredSize(new Dimension(390, 400));
@@ -52,25 +56,25 @@ public class AddressList extends JDialog {
 		listScroll.setPreferredSize(new Dimension(380, 370));
 
 		nameLabel = new JLabel("Name");
-		phoneLabel = new JLabel("Phone");
-		
+		phoneLabel = new JLabel("Phone");		
 		name = new JTextField(8);
-		phoneNumber = new JTextField(12);
-
-		
+		phoneNumber = new JTextField(12);		
 		newAddress = new JButton("NEW");
-		newAddress.setBounds(10, 80, 50, 25);
-
 		deleteAddress = new JButton("DELETE");
-		deleteAddress.setBounds(10, 80, 50, 25);
 
+		JPanel inputPanel = new JPanel();
+		inputPanel.add(nameLabel);		
+		inputPanel.add(name);
+		inputPanel.add(phoneLabel);
+		inputPanel.add(phoneNumber);
+		
+		JPanel buttonPanel = new JPanel();
+		buttonPanel.add(newAddress);
+		buttonPanel.add(deleteAddress);
+		
 		listpanel.add(listScroll);
-		listpanel.add(nameLabel);
-		listpanel.add(name);
-		listpanel.add(phoneLabel);
-		listpanel.add(phoneNumber);
-		listpanel.add(newAddress);
-		listpanel.add(deleteAddress);
+		listpanel.add(inputPanel);
+		listpanel.add(buttonPanel);
 
 		readAddressDB();
 
@@ -88,7 +92,6 @@ public class AddressList extends JDialog {
 				writeAddressDB();
 			}
 		});
-
 	}
 
 	void addAddress() {
@@ -99,7 +102,6 @@ public class AddressList extends JDialog {
 		listModel.addElement(address);
 
 		reset();
-
 	}
 
 	void deleteAddress() {
@@ -109,12 +111,10 @@ public class AddressList extends JDialog {
 		address = addressObjects.elementAt(n);
 		addressObjects.remove(n);
 		listModel.removeElementAt(n);
-
 	}
 
 	void readAddressDB() {
 		try {
-
 			Address address;
 			File f1 = new File("address");
 
@@ -128,18 +128,14 @@ public class AddressList extends JDialog {
 					address = addressObjects.get(i);
 					listModel.addElement(address);
 				}
-
 				ois.close();
-
 			}
-		} catch (IOException ie) {
-		} catch (ClassNotFoundException ce) {
-		}
+		} catch (IOException ie) {} 
+		catch (ClassNotFoundException ce) {}
 	}
 
 	void writeAddressDB() {
 		try {
-
 			File f1 = new File("address");
 
 			f1.createNewFile();
@@ -149,8 +145,7 @@ public class AddressList extends JDialog {
 			oos.writeObject(addressObjects);
 			oos.close();
 
-		} catch (IOException ie) {
-		}
+		} catch (IOException ie) {}
 	}
 
 	void reset() {
